@@ -1,0 +1,18 @@
+PODS:
+  - GzipSwift (3.1.2)
+  - RFOverlayScrollView (0.3)
+  - wpxmlrpc (0.8.2)
+
+DEPENDENCIES:
+  - GzipSwift
+  - RFOverlayScrollView
+  - wpxmlrpc
+
+SPEC CHECKSUMS:
+  GzipSwift: 86700e6530b3aa5e782ed7107cde2deea6b16688
+  RFOverlayScrollView: 8e2b3cee771aab5b3cf4df10b0ead12d22c7d965
+  wpxmlrpc: 38623cc415117914d6ab5bf2ab8a57a4076cc469
+
+PODFILE CHECKSUM: 7ac6cbb3d68099001746f501157f06c6a04ef31a
+
+COCOAPODS: 1.2.0
