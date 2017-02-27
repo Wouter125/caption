@@ -10,15 +10,27 @@ import Cocoa
 import wpxmlrpc
 import Gzip
 
-class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
+class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate {
     @IBOutlet weak var searchField: NSTextField!
     @IBOutlet weak var subtitleTableView: NSTableView!
-    //private var searchData = [String]()
+    @IBOutlet weak var loadingIndicator: NSProgressIndicator!
+    @IBOutlet weak var eraseButton: NSButton!
+    @IBOutlet weak var languagePopup: NSPopUpButton!
     private var searchData = [SubtitleDataModel]()
+    private var selectedLanguage:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingIndicator.isHidden = true
+        eraseButton.isHidden = true
+        
+        selectedLanguage = "eng"
+        
+        languagePopup.removeAllItems()
+        languagePopup.addItems(withTitles: (LanguageList.languageDict.allKeys as! [String]).sorted())
+        languagePopup.selectItem(withTitle: "English")
         osLogin()
+        
         //Clean this up. Don't leave it in viewDidLoad. Prefer to move it to a subclass. Inside CustomSearchField
         searchField.wantsLayer = true
         let textFieldLayer = CALayer()
@@ -27,6 +39,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         searchField.layer?.backgroundColor = CGColor.white
         searchField.layer?.borderColor = CGColor.white
         searchField.layer?.borderWidth = 0
+        searchField.delegate = self
     }
 
     
@@ -40,7 +53,30 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     // MARK: - Textfield
     @IBAction func searchOpenSubtitles(_ sender: NSTextField) {
         let searchTerm = searchField.stringValue
-        osSearch(query: searchTerm)
+        searchData.removeAll()
+        subtitleTableView.reloadData()
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimation(NSTextField.self)
+        osSearch(selectedLan: selectedLanguage, query: searchTerm)
+    }
+    
+    override func controlTextDidChange(_ obj: Notification) {
+        if searchField.stringValue != "" {
+            eraseButton.isHidden = false
+        } else {
+            eraseButton.isHidden = true
+        }
+    }
+    
+    @IBAction func eraseText(_ sender: NSButton) {
+        searchField.stringValue = ""
+        eraseButton.isHidden = true
+    }
+    
+    
+    // MARK: - Dropdown List
+    @IBAction func didSelectLanguage(_ sender: NSPopUpButton) {
+        self.selectedLanguage = LanguageList.languageDict.object(forKey: languagePopup.titleOfSelectedItem! as String)! as! String
     }
     
     
@@ -60,19 +96,24 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     }
     
     @IBAction func rowClicked(_ sender: NSTableView) {
-        let selectedRow = subtitleTableView.selectedRow
-        let downloadID = searchData[selectedRow].IDSubtitleFile
-        downloadSubtitle(subtitleID: downloadID)
+        if searchData.count != 0 {
+            let selectedRow = subtitleTableView.selectedRow
+            let downloadID = searchData[selectedRow].IDSubtitleFile
+            let movieName = searchData[selectedRow].MovieReleaseName
+            downloadSubtitle(subtitleID: downloadID, movieName: movieName)
+        }
     }
     
     
     
-    // MARK: - Subtile Saving
-    func saveSubtitle(subtitle: Data) {
+    // MARK: - Subtitle Saving
+    func saveSubtitle(subtitle: Data, filename: String) {
         let fileContentToWrite = subtitle
         
         let FS = NSSavePanel()
         FS.canCreateDirectories = true
+        FS.nameFieldStringValue = filename
+        FS.title = "Save Subtitle"
         FS.allowedFileTypes = ["srt"]
         
         FS.begin { result in
@@ -85,9 +126,9 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
                 }
             }
         }
-        
     }
     
+
     
     /* 
     * Login to OpenSubtitles and obtain a token
@@ -105,7 +146,6 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         loginManager.osData { (response, error) in
             if let loginDictionary = response as? [String: AnyObject] {
                 OpenSubtitleConfiguration.token = loginDictionary["token"] as? String
-                print(OpenSubtitleConfiguration.token)
             }
         }
     }
@@ -170,9 +210,10 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     /*
     * Search OpenSubtitles based on textfield input
     */
-    private func osSearch(query: String?) {
+    private func osSearch(selectedLan: String!, query: String?) {
+        osLogin()
         self.searchData = [SubtitleDataModel]()
-        let params = [OpenSubtitleConfiguration.token!, [["sublanguageid": "eng", "query": query]]] as [Any]
+        let params = [OpenSubtitleConfiguration.token!, [["sublanguageid": selectedLan, "query": query]]] as [Any]
         
         let searchManager = OpenSubtitleDataManager(
             secureBaseURL: OpenSubtitleConfiguration.secureBaseURL!,
@@ -180,7 +221,10 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
             parameters: params)
         
         searchManager.osData{ (response, error) in
-            print("running")
+            DispatchQueue.main.async {
+                self.loadingIndicator.isHidden = true
+                self.loadingIndicator.stopAnimation(response)
+            }
             if let searchDictionary = response as? [String: AnyObject] {
                 if let searchResults = searchDictionary["data"] as? [[String: AnyObject]] {
                     for results in searchResults {
@@ -192,7 +236,6 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
                     }
                 }
             }
-            print(self.searchData[0])
         }
     }
     
@@ -200,7 +243,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     /*
     * Download OpenSubtitle
     */
-    private func downloadSubtitle(subtitleID: String) {
+    private func downloadSubtitle(subtitleID: String, movieName: String) {
         print("let's download")
         let params = [OpenSubtitleConfiguration.token!, [subtitleID]] as [Any]
         
@@ -219,7 +262,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
                         if decodedData.isGzipped {
                             decompressedData = try! decodedData.gunzipped()
                             DispatchQueue.main.async {
-                                self.saveSubtitle(subtitle: decompressedData)
+                                self.saveSubtitle(subtitle: decompressedData, filename: movieName)
                             }
                         } else {
                             decompressedData = decodedData

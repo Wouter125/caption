@@ -17,6 +17,7 @@
 		6C69D56F1E524C3400AB24D7 /* CustomSearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C69D56E1E524C3400AB24D7 /* CustomSearchField.swift */; };
 		6CA947FF1E589CAE0052E060 /* CustomTableViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA947FE1E589CAE0052E060 /* CustomTableViewRow.swift */; };
 		6CBB19D91E536E3100030C96 /* OpenSubtitleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBB19D81E536E3100030C96 /* OpenSubtitleDataManager.swift */; };
+		6CC5097E1E624101001931ED /* LanguageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5097D1E624101001931ED /* LanguageList.swift */; };
 		6CE789411E536BD4004BD0FF /* OpenSubtitleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE789401E536BD4004BD0FF /* OpenSubtitleConfiguration.swift */; };
 		6CF2B9291E53380E0023FC58 /* CustomWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF2B9281E53380E0023FC58 /* CustomWindowController.swift */; };
 		6CF5EC4E1E59E193001F185B /* SubtitleDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF5EC4D1E59E193001F185B /* SubtitleDataModel.swift */; };
@@ -63,6 +64,7 @@
 		6C69D56E1E524C3400AB24D7 /* CustomSearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchField.swift; sourceTree = "<group>"; };
 		6CA947FE1E589CAE0052E060 /* CustomTableViewRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewRow.swift; sourceTree = "<group>"; };
 		6CBB19D81E536E3100030C96 /* OpenSubtitleDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSubtitleDataManager.swift; sourceTree = "<group>"; };
+		6CC5097D1E624101001931ED /* LanguageList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageList.swift; sourceTree = "<group>"; };
 		6CE789401E536BD4004BD0FF /* OpenSubtitleConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSubtitleConfiguration.swift; sourceTree = "<group>"; };
 		6CF2B9281E53380E0023FC58 /* CustomWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWindowController.swift; sourceTree = "<group>"; };
 		6CF5EC4D1E59E193001F185B /* SubtitleDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleDataModel.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				6CA947FD1E57B27F0052E060 /* DataManager */,
 				6CF5EC4C1E59E0F1001F185B /* Model */,
 				6CE7893D1E53692A004BD0FF /* Subclass */,
+				6CC5097C1E6240ED001931ED /* Languages */,
 				6C69D5471E52408600AB24D7 /* Assets.xcassets */,
 				6C69D5491E52408600AB24D7 /* Main.storyboard */,
 				6C69D54C1E52408600AB24D7 /* Info.plist */,
@@ -184,6 +187,14 @@
 				6CBB19D81E536E3100030C96 /* OpenSubtitleDataManager.swift */,
 			);
 			name = DataManager;
+			sourceTree = "<group>";
+		};
+		6CC5097C1E6240ED001931ED /* Languages */ = {
+			isa = PBXGroup;
+			children = (
+				6CC5097D1E624101001931ED /* LanguageList.swift */,
+			);
+			name = Languages;
 			sourceTree = "<group>";
 		};
 		6CE7893D1E53692A004BD0FF /* Subclass */ = {
@@ -504,6 +515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CF2B9291E53380E0023FC58 /* CustomWindowController.swift in Sources */,
+				6CC5097E1E624101001931ED /* LanguageList.swift in Sources */,
 				6CF5EC4E1E59E193001F185B /* SubtitleDataModel.swift in Sources */,
 				6CBB19D91E536E3100030C96 /* OpenSubtitleDataManager.swift in Sources */,
 				6CE789411E536BD4004BD0FF /* OpenSubtitleConfiguration.swift in Sources */,

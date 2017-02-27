@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
@@ -689,7 +689,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField focusRingType="none" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGf-MF-ib3">
-                                <rect key="frame" x="0.0" y="447" width="525" height="65"/>
+                                <rect key="frame" x="0.0" y="447" width="485" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="snL-HG-Zzm"/>
                                 </constraints>
@@ -724,6 +724,9 @@
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="didSelectLanguage:" target="XfG-lQ-9wD" id="jnH-58-bjc"/>
+                                            </connections>
                                         </popUpButton>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ejb-6k-gOU">
                                             <rect key="frame" x="23" y="7" width="64" height="17"/>
@@ -751,6 +754,9 @@
                             <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="jGw-y9-hYL">
                                 <rect key="frame" x="0.0" y="0.0" width="525" height="414"/>
                                 <subviews>
+                                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="rvB-QE-eav">
+                                        <rect key="frame" x="246" y="191" width="32" height="32"/>
+                                    </progressIndicator>
                                     <scrollView focusRingType="none" borderType="none" autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L0I-yv-eei" customClass="RFOverlayScrollView">
                                         <rect key="frame" x="0.0" y="0.0" width="525" height="414"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="o1l-WO-vik">
@@ -824,18 +830,37 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="L0I-yv-eei" secondAttribute="bottom" id="2lf-bS-M8d"/>
                                     <constraint firstItem="L0I-yv-eei" firstAttribute="top" secondItem="jGw-y9-hYL" secondAttribute="top" id="8ix-Lb-IEP"/>
+                                    <constraint firstItem="rvB-QE-eav" firstAttribute="centerY" secondItem="jGw-y9-hYL" secondAttribute="centerY" id="DHY-Dr-bhg"/>
                                     <constraint firstItem="L0I-yv-eei" firstAttribute="leading" secondItem="jGw-y9-hYL" secondAttribute="leading" id="K9K-QT-hK0"/>
                                     <constraint firstAttribute="trailing" secondItem="L0I-yv-eei" secondAttribute="trailing" id="q0u-JG-rN8"/>
+                                    <constraint firstItem="rvB-QE-eav" firstAttribute="centerX" secondItem="jGw-y9-hYL" secondAttribute="centerX" id="wsP-T2-Hej"/>
                                 </constraints>
                             </visualEffectView>
+                            <button focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="oQu-fP-X7R">
+                                <rect key="frame" x="485" y="447" width="15" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="W0w-NV-aKI"/>
+                                    <constraint firstAttribute="width" constant="15" id="oc0-iK-afU"/>
+                                </constraints>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="erase" imagePosition="overlaps" alignment="center" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="EUf-cZ-FHn">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="eraseText:" target="XfG-lQ-9wD" id="rBx-lV-QvU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="oQu-fP-X7R" firstAttribute="top" secondItem="iGf-MF-ib3" secondAttribute="top" id="0ix-d8-Bax"/>
                             <constraint firstAttribute="trailing" secondItem="jGw-y9-hYL" secondAttribute="trailing" id="1Rf-kq-SCd"/>
                             <constraint firstItem="jGw-y9-hYL" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="7B5-OF-EMS"/>
                             <constraint firstAttribute="bottom" secondItem="jGw-y9-hYL" secondAttribute="bottom" id="JC3-or-VYb"/>
-                            <constraint firstAttribute="trailing" secondItem="iGf-MF-ib3" secondAttribute="trailing" id="Pt7-xk-epc"/>
+                            <constraint firstAttribute="trailing" secondItem="iGf-MF-ib3" secondAttribute="trailing" constant="40" id="Pt7-xk-epc"/>
                             <constraint firstItem="iGf-MF-ib3" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="25" id="b6i-Vz-FlP"/>
                             <constraint firstItem="ihV-MP-zS0" firstAttribute="top" secondItem="iGf-MF-ib3" secondAttribute="bottom" constant="5" id="bgG-cm-2ck"/>
+                            <constraint firstItem="oQu-fP-X7R" firstAttribute="bottom" secondItem="iGf-MF-ib3" secondAttribute="bottom" id="eyM-MO-FYm"/>
+                            <constraint firstAttribute="trailing" secondItem="oQu-fP-X7R" secondAttribute="trailing" constant="25" id="gNA-Na-7Hn"/>
                             <constraint firstItem="jGw-y9-hYL" firstAttribute="top" secondItem="ihV-MP-zS0" secondAttribute="bottom" id="i7Z-CP-BhI"/>
                             <constraint firstAttribute="trailing" secondItem="ihV-MP-zS0" secondAttribute="trailing" id="jb0-Au-XQC"/>
                             <constraint firstItem="iGf-MF-ib3" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="l26-Ey-ijn"/>
@@ -843,6 +868,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="eraseButton" destination="oQu-fP-X7R" id="Cfd-F4-sn7"/>
+                        <outlet property="languagePopup" destination="eXX-IJ-oRm" id="L2J-E5-Ofy"/>
+                        <outlet property="loadingIndicator" destination="rvB-QE-eav" id="4Fx-hY-tqq"/>
                         <outlet property="searchField" destination="iGf-MF-ib3" id="9Ot-vH-VUk"/>
                         <outlet property="subtitleTableView" destination="HOY-Fo-pJ2" id="qjQ-WO-W4Y"/>
                     </connections>
@@ -852,4 +880,7 @@
             <point key="canvasLocation" x="97.5" y="788.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="erase" width="42" height="42"/>
+    </resources>
 </document>
