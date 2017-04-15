@@ -680,26 +680,16 @@
                                 <viewController key="viewController" id="etL-DY-XdL">
                                     <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aJz-fw-U46">
                                         <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
-                                        <buttonCell key="cell" type="push" title="Hello" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gba-ye-CM3">
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="search" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gba-ye-CM3">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="didSelectSearch:" target="B8D-0N-5wS" id="n9L-0o-Tp7"/>
+                                        </connections>
                                     </button>
                                 </viewController>
                                 <size key="designTimeSize" width="72" height="30"/>
-                            </touchBarItem>
-                            <touchBarItem id="6wT-UI-Do3">
-                                <viewController key="viewController" id="um5-Nd-N0G">
-                                    <textField key="view" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSH-6Q-aa6">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="24"/>
-                                        <textFieldCell key="cell" borderStyle="bezel" alignment="left" title="Booyah" drawsBackground="YES" id="DWM-c1-fNT">
-                                            <font key="font" usesAppearanceFont="YES"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </viewController>
-                                <size key="designTimeSize" width="60" height="24"/>
                             </touchBarItem>
                         </touchBarItems>
                     </touchBar>
@@ -719,7 +709,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="360" height="440"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="gVp-fk-WBz">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="gVp-fk-WBz" customClass="DragDropView" customModule="caption" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="360" height="315"/>
                             </customView>
                             <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="9fH-yr-0Yg">
@@ -913,5 +903,6 @@
     </scenes>
     <resources>
         <image name="erase" width="42" height="42"/>
+        <image name="search" width="20" height="19"/>
     </resources>
 </document>

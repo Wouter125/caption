@@ -26,16 +26,17 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         self.searchEraseButton.isHidden = true
         
         searchField.delegate = self
+        
         initNSPopUpButton()
         
-        let videoUrl = "/Users/wouter/Downloads/video-1491565309.mp4"
+        let videoUrl = "/Users/wouter/Downloads/breakdance.avi"
         let videoHash = OpenSubtitlesHash.hashFor(videoUrl)
         debugPrint("File hash: \(videoHash.fileHash)\nFile size: \(videoHash.fileSize)")
         
         super.viewDidLoad()
     }
     
-    
+    // MARK: - TextField
     @IBAction func searchSubtitles(_ sender: NSTextField) {
         let searchTerm = searchField.stringValue
         searchData.removeAll()
@@ -61,6 +62,10 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         DispatchQueue.main.async {
             self.subtitleTableView.reloadData()
         }
+    }
+    
+    func makeFirstResponder() {
+        searchField.becomeFirstResponder()
     }
     
     // MARK: - Dropdown List
@@ -97,6 +102,21 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         return SubtitleTableViewRow()
     }
     
+    
+    @IBAction func didSelectRow(_ sender: NSTableView) {
+        if searchData.count != 0 {
+            let selectedRow = subtitleTableView.selectedRow
+            let subtitleID = searchData[selectedRow].IDSubtitleFile
+            let movieName = searchData[selectedRow].MovieReleaseName
+            osDownload(subtitleID: subtitleID!, movieName: movieName!)
+        }
+    }
+    
+    // MARK: - Touchbar Functions
+    
+    
+    
+    // MARK: - OpenSubtitles Handlers
     func osLogin(completed: @escaping FinishedLogIn) {
         let params = ["", "", "en", OpenSubtitleConfiguration.userAgent] as [Any]
         
@@ -108,16 +128,6 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         loginManager.fetchOpenSubtitleData { (response) in
             OpenSubtitleConfiguration.token = response[0]["token"].string!
             completed()
-        }
-    }
-    
-    
-    @IBAction func didSelectRow(_ sender: NSTableView) {
-        if searchData.count != 0 {
-            let selectedRow = subtitleTableView.selectedRow
-            let subtitleID = searchData[selectedRow].IDSubtitleFile
-            let movieName = searchData[selectedRow].MovieReleaseName
-            osDownload(subtitleID: subtitleID!, movieName: movieName!)
         }
     }
     

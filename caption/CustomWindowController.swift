@@ -23,4 +23,9 @@ class CustomWindowController: NSWindowController {
             window.backgroundColor = NSColor.white
         }
     }
+    
+    @IBAction func didSelectSearch(_ sender: NSButton) {
+        let controller = self.contentViewController as! ViewController
+        controller.makeFirstResponder()
+    }
 }

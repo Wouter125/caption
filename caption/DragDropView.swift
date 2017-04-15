@@ -11,7 +11,7 @@ import Cocoa
 class DragDropView: NSView {
     
     var filePath: String?
-    let expectedExt = ["kext"]  //file extensions allowed for Drag&Drop
+    let expectedExt = ["jpg", "avi"]  //file extensions allowed for Drag&Drop
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -65,7 +65,8 @@ class DragDropView: NSView {
         
         //GET YOUR FILE PATH !!
         self.filePath = path
-        Swift.print("FilePath: \(filePath)")
+        let videoHash = OpenSubtitlesHash.hashFor(filePath!)
+        debugPrint("File hash: \(videoHash.fileHash)\nFile size: \(videoHash.fileSize)")
         
         return true
     }
