@@ -9,16 +9,25 @@
 import Cocoa
 
 class CustomSearchField: NSTextField {
-//    override func draw(_ dirtyRect: NSRect) {
-//        super.draw(dirtyRect)
-//        wantsLayer = true
-//        let textFieldLayer = CALayer()
-//        layer?.addSublayer(textFieldLayer)
-//        backgroundColor = NSColor.white
-//        textFieldLayer.backgroundColor = CGColor.white
-//        textFieldLayer.borderColor = CGColor.white
-//        textFieldLayer.borderWidth = 0
-//    }
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupView()
+    }
+    
+    func setupView(){
+        self.wantsLayer = true
+        let textFieldLayer = CALayer()
+        self.layer = textFieldLayer
+        self.backgroundColor = NSColor.white
+        self.layer?.backgroundColor = CGColor.white
+        self.layer?.borderColor = CGColor.white
+        self.layer?.borderWidth = 0
+    }
 }
 
 class CustomSearchFieldCell: NSTextFieldCell {
