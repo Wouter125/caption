@@ -25,27 +25,16 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         self.searchLoadingIndicator.isHidden = true
         self.searchEraseButton.isHidden = true
         
-        initCustomSearchField()
+        searchField.delegate = self
         initNSPopUpButton()
         
+        let videoUrl = "/Users/wouter/Downloads/video-1491565309.mp4"
+        let videoHash = OpenSubtitlesHash.hashFor(videoUrl)
+        debugPrint("File hash: \(videoHash.fileHash)\nFile size: \(videoHash.fileSize)")
+        
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
     
-    
-    // MARK: - TextField (Should move this to the subclass, but doesn't work 100% yet.) 
-    // See http://stackoverflow.com/questions/43292681/nstextfield-fades-out-after-subclassing
-    // for more information
-    func initCustomSearchField() {
-        searchField.wantsLayer = true
-        let textFieldLayer = CALayer()
-        searchField.layer = textFieldLayer
-        searchField.backgroundColor = NSColor.white
-        searchField.layer?.backgroundColor = CGColor.white
-        searchField.layer?.borderColor = CGColor.white
-        searchField.layer?.borderWidth = 0
-        searchField.delegate = self
-    }
     
     @IBAction func searchSubtitles(_ sender: NSTextField) {
         let searchTerm = searchField.stringValue
@@ -67,6 +56,11 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     @IBAction func didClickErase(_ sender: NSButton) {
         searchField.stringValue = ""
         searchEraseButton.isHidden = true
+        
+        self.searchData = [SubtitleSearchDataModel]()
+        DispatchQueue.main.async {
+            self.subtitleTableView.reloadData()
+        }
     }
     
     // MARK: - Dropdown List
@@ -79,6 +73,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     
     @IBAction func didSelectLanguage(_ sender: NSPopUpButton) {
         self.selectedLanguage = LanguageList.languageDict.object(forKey: languagePopUp.titleOfSelectedItem! as String)! as! String
+        osSearch(selectedLan: selectedLanguage, query: searchField.stringValue)
     }
     
     
@@ -208,19 +203,8 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
                     print (error.localizedDescription)
                 }
             }
-
+            
         })
-        
-//        FS.begin { result in
-//            if result == NSFileHandlingPanelOKButton {
-//                guard let url = FS.url else { return }
-//                do {
-//                    try fileContentToWrite.write(to: url)
-//                } catch {
-//                    print (error.localizedDescription)
-//                }
-//            }
-//        }
     }
 }
 

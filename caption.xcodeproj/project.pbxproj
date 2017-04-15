@@ -11,6 +11,8 @@
 		6BE586C0B6ED34B7AB87E6BB /* Pods_caption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B6D8DA23364BF0F5B2E2F70 /* Pods_caption.framework */; };
 		6C1DFC9E1E98E6AE00ECB4EA /* SubtitleTableViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DFC9D1E98E6AE00ECB4EA /* SubtitleTableViewRow.swift */; };
 		6C32947E1E99888800DF33EE /* OpenSubtitleHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C32947D1E99888800DF33EE /* OpenSubtitleHandlers.swift */; };
+		6C4F3DCD1EA2690C000D0558 /* OpenSubtitleHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4F3DCC1EA2690C000D0558 /* OpenSubtitleHash.swift */; };
+		6C4F3DD01EA2693F000D0558 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4F3DCF1EA2693F000D0558 /* DragDropView.swift */; };
 		6C87E9271E98CD1B0069C445 /* CustomColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87E9261E98CD1B0069C445 /* CustomColorView.swift */; };
 		6C87E9291E98D1840069C445 /* SubtitleLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87E9281E98D1840069C445 /* SubtitleLanguageModel.swift */; };
 		6C92A2DC1E9EB969000CAE18 /* OpenSubtitleDownloadHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C92A2DB1E9EB969000CAE18 /* OpenSubtitleDownloadHandler.swift */; };
@@ -53,6 +55,8 @@
 		6B6D8DA23364BF0F5B2E2F70 /* Pods_caption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_caption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C1DFC9D1E98E6AE00ECB4EA /* SubtitleTableViewRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewRow.swift; sourceTree = "<group>"; };
 		6C32947D1E99888800DF33EE /* OpenSubtitleHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSubtitleHandlers.swift; sourceTree = "<group>"; };
+		6C4F3DCC1EA2690C000D0558 /* OpenSubtitleHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSubtitleHash.swift; sourceTree = "<group>"; };
+		6C4F3DCF1EA2693F000D0558 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
 		6C87E9261E98CD1B0069C445 /* CustomColorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColorView.swift; sourceTree = "<group>"; };
 		6C87E9281E98D1840069C445 /* SubtitleLanguageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleLanguageModel.swift; sourceTree = "<group>"; };
 		6C92A2DB1E9EB969000CAE18 /* OpenSubtitleDownloadHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSubtitleDownloadHandler.swift; sourceTree = "<group>"; };
@@ -116,6 +120,14 @@
 			name = DataHandlers;
 			sourceTree = "<group>";
 		};
+		6C4F3DCE1EA26916000D0558 /* Hashes */ = {
+			isa = PBXGroup;
+			children = (
+				6C4F3DCC1EA2690C000D0558 /* OpenSubtitleHash.swift */,
+			);
+			name = Hashes;
+			sourceTree = "<group>";
+		};
 		6C934A771E98C31600821353 /* Subclass */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +135,7 @@
 				6C934A751E98C30900821353 /* CustomSearchField.swift */,
 				6C87E9261E98CD1B0069C445 /* CustomColorView.swift */,
 				6C1DFC9D1E98E6AE00ECB4EA /* SubtitleTableViewRow.swift */,
+				6C4F3DCF1EA2693F000D0558 /* DragDropView.swift */,
 			);
 			name = Subclass;
 			sourceTree = "<group>";
@@ -168,6 +181,7 @@
 				6C32947C1E99886800DF33EE /* DataHandlers */,
 				6C96FBD11E8D351E00678DB4 /* DataModels */,
 				6C934A771E98C31600821353 /* Subclass */,
+				6C4F3DCE1EA26916000D0558 /* Hashes */,
 				6C9D21601E86A0DD00C653B0 /* Assets.xcassets */,
 				6C9D21621E86A0DD00C653B0 /* Main.storyboard */,
 				6C9D21651E86A0DD00C653B0 /* Info.plist */,
@@ -516,6 +530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C92A2DC1E9EB969000CAE18 /* OpenSubtitleDownloadHandler.swift in Sources */,
+				6C4F3DD01EA2693F000D0558 /* DragDropView.swift in Sources */,
 				6C96FBD31E8D354100678DB4 /* SubtitleSearchDataModel.swift in Sources */,
 				6C87E9291E98D1840069C445 /* SubtitleLanguageModel.swift in Sources */,
 				6C9D215F1E86A0DD00C653B0 /* ViewController.swift in Sources */,
@@ -523,6 +538,7 @@
 				6C934A741E98C2DB00821353 /* CustomWindowController.swift in Sources */,
 				6C9D218A1E86A10700C653B0 /* OpenSubtitleConfiguration.swift in Sources */,
 				6C87E9271E98CD1B0069C445 /* CustomColorView.swift in Sources */,
+				6C4F3DCD1EA2690C000D0558 /* OpenSubtitleHash.swift in Sources */,
 				6C32947E1E99888800DF33EE /* OpenSubtitleHandlers.swift in Sources */,
 				6C9D215D1E86A0DD00C653B0 /* AppDelegate.swift in Sources */,
 				6C1DFC9E1E98E6AE00ECB4EA /* SubtitleTableViewRow.swift in Sources */,
