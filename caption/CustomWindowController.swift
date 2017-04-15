@@ -1,8 +1,8 @@
 //
-//  CustomWindow.swift
+//  CustomWindowController.swift
 //  caption
 //
-//  Created by Wouter van de Kamp on 14/02/2017.
+//  Created by Wouter van de Kamp on 08/04/2017.
 //  Copyright © 2017 Wouter van de Kamp. All rights reserved.
 //
 

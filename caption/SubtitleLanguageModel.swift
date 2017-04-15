@@ -1,12 +1,12 @@
 //
-//  LanguageList.swift
+//  LanguageModel.swift
 //  caption
 //
-//  Created by Wouter van de Kamp on 25/02/2017.
+//  Created by Wouter van de Kamp on 08/04/2017.
 //  Copyright © 2017 Wouter van de Kamp. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 struct LanguageList {
     static var languageDict = [
@@ -81,5 +81,5 @@ struct LanguageList {
         "Ukrainian": "ukr",
         "Urdu": "urd",
         "Vietnamese": "vie"
-    ] as NSDictionary
+        ] as NSDictionary
 }

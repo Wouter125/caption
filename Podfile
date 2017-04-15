@@ -6,9 +6,10 @@ target 'caption' do
   use_frameworks!
 
   # Pods for caption
-  pod 'RFOverlayScrollView'
-  pod 'wpxmlrpc'
-  pod 'GzipSwift'
+    pod 'Alamofire', '~> 4.4'
+    pod 'AlamofireXMLRPC', :git => 'https://github.com/kodlian/AlamofireXMLRPC.git'
+    pod 'GzipSwift'
+
 
   target 'captionTests' do
     inherit! :search_paths

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6C69D53F1E52408600AB24D7"
+               BlueprintIdentifier = "6C9D21581E86A0DD00C653B0"
                BuildableName = "caption.app"
                BlueprintName = "caption"
                ReferencedContainer = "container:caption.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6C69D5501E52408600AB24D7"
+               BlueprintIdentifier = "6C9D21691E86A0DD00C653B0"
                BuildableName = "captionTests.xctest"
                BlueprintName = "captionTests"
                ReferencedContainer = "container:caption.xcodeproj">
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6C69D55B1E52408600AB24D7"
+               BlueprintIdentifier = "6C9D21741E86A0DD00C653B0"
                BuildableName = "captionUITests.xctest"
                BlueprintName = "captionUITests"
                ReferencedContainer = "container:caption.xcodeproj">
@@ -52,7 +52,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6C69D53F1E52408600AB24D7"
+            BlueprintIdentifier = "6C9D21581E86A0DD00C653B0"
             BuildableName = "caption.app"
             BlueprintName = "caption"
             ReferencedContainer = "container:caption.xcodeproj">
@@ -75,7 +75,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6C69D53F1E52408600AB24D7"
+            BlueprintIdentifier = "6C9D21581E86A0DD00C653B0"
             BuildableName = "caption.app"
             BlueprintName = "caption"
             ReferencedContainer = "container:caption.xcodeproj">
@@ -94,7 +94,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6C69D53F1E52408600AB24D7"
+            BlueprintIdentifier = "6C9D21581E86A0DD00C653B0"
             BuildableName = "caption.app"
             BlueprintName = "caption"
             ReferencedContainer = "container:caption.xcodeproj">

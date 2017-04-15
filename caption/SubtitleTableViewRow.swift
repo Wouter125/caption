@@ -1,14 +1,14 @@
 //
-//  CustomTableViewRow.swift
+//  SubtitleTableViewRow.swift
 //  caption
 //
-//  Created by Wouter van de Kamp on 18/02/2017.
+//  Created by Wouter van de Kamp on 08/04/2017.
 //  Copyright © 2017 Wouter van de Kamp. All rights reserved.
 //
 
 import Cocoa
 
-class CustomTableViewRow: NSTableRowView {
+class SubtitleTableViewRow: NSTableRowView {
     override func drawSelection(in dirtyRect: NSRect) {
         if self.selectionHighlightStyle != .none {
             let selectionRect = NSInsetRect(self.bounds, 0, 0)
