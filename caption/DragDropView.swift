@@ -11,25 +11,42 @@ import Cocoa
 class DragDropView: NSView {
     
     var filePath: String?
-    let expectedExt = ["jpg", "avi"]  //file extensions allowed for Drag&Drop
+    let expectedExt = ["jpg", "avi"] //file extensions allowed for Drag&Drop
+    var placeholderText: NSTextField?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        self.wantsLayer = true
-        self.layer?.backgroundColor = NSColor.gray.cgColor
+        placeholderText = self.subviews[0] as? NSTextField
+        self.alphaValue = 0.5
         
         register(forDraggedTypes: [NSFilenamesPboardType, NSURLPboardType])
     }
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        // Drawing code here.
+        
+        // dash customization parameters
+        let lineWidth: CGFloat = 1
+        let dashHeight: CGFloat = 3
+        let dashLength: CGFloat = 5
+        let dashColor: NSColor = .white
+        
+        // setup the context
+        let currentContext = NSGraphicsContext.current()!.cgContext
+        currentContext.setLineWidth(lineWidth)
+        currentContext.setLineDash(phase: 0, lengths: [dashLength])
+        currentContext.setStrokeColor(dashColor.cgColor)
+        
+        // draw the dashed path
+        currentContext.addRect(bounds.insetBy(dx: dashHeight, dy: dashHeight))
+        currentContext.strokePath()
     }
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         if checkExtension(sender) == true {
-            self.layer?.backgroundColor = NSColor.blue.cgColor
+            self.alphaValue = 1.0
+            placeholderText?.stringValue = "Drop Files"
             return .copy
         } else {
             return NSDragOperation()
@@ -51,11 +68,13 @@ class DragDropView: NSView {
     }
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
-        self.layer?.backgroundColor = NSColor.gray.cgColor
+        self.alphaValue = 0.5
+        placeholderText?.stringValue = "Drop an episode or season"
     }
     
     override func draggingEnded(_ sender: NSDraggingInfo?) {
-        self.layer?.backgroundColor = NSColor.gray.cgColor
+        self.alphaValue = 0.5
+        placeholderText?.stringValue = "Drop an episode or season"
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {

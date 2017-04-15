@@ -15,7 +15,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     @IBOutlet weak var languagePopUp: NSPopUpButton!
     @IBOutlet weak var searchLoadingIndicator: NSProgressIndicator!
     @IBOutlet weak var searchEraseButton: NSButton!
-    
+    @IBOutlet weak var dragdropPlaceholder: DragDropView!
     
     private var selectedLanguage:String!
     private var searchData = [SubtitleSearchDataModel]()
@@ -27,6 +27,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         
         searchField.delegate = self
         
+        makeFirstResponder()
         initNSPopUpButton()
         
         let videoUrl = "/Users/wouter/Downloads/breakdance.avi"
@@ -34,6 +35,14 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         debugPrint("File hash: \(videoHash.fileHash)\nFile size: \(videoHash.fileSize)")
         
         super.viewDidLoad()
+    }
+    
+    // MARK: - Reload TableView
+    func reloadTableView() {
+        self.searchData = [SubtitleSearchDataModel]()
+        DispatchQueue.main.async {
+            self.subtitleTableView.reloadData()
+        }
     }
     
     // MARK: - TextField
@@ -49,19 +58,19 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     override func controlTextDidChange(_ obj: Notification) {
         if searchField.stringValue != "" {
             searchEraseButton.isHidden = false
+            dragdropPlaceholder.isHidden = true
         } else {
+            reloadTableView()
             searchEraseButton.isHidden = true
+            dragdropPlaceholder.isHidden = false
         }
     }
     
     @IBAction func didClickErase(_ sender: NSButton) {
+        reloadTableView()
         searchField.stringValue = ""
         searchEraseButton.isHidden = true
-        
-        self.searchData = [SubtitleSearchDataModel]()
-        DispatchQueue.main.async {
-            self.subtitleTableView.reloadData()
-        }
+        dragdropPlaceholder.isHidden = false
     }
     
     func makeFirstResponder() {
@@ -112,8 +121,6 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         }
     }
     
-    // MARK: - Touchbar Functions
-    
     
     
     // MARK: - OpenSubtitles Handlers
@@ -160,6 +167,10 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
                 }
             }
         }
+    }
+    
+    func checkHash() {
+        
     }
     
     func osDownload(subtitleID: String, movieName: String) {
@@ -216,5 +227,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
             
         })
     }
+    
+
 }
 
