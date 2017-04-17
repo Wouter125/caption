@@ -21,6 +21,10 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
     
     private var selectedLanguage:String!
     private var searchData = [SubtitleSearchDataModel]()
+    
+    private var videoHash:String?
+    private var videoFileSize: UInt64?
+    
     typealias FinishedLogIn = () -> ()
     
     override func viewDidLoad() {
@@ -56,7 +60,7 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
         subtitleTableView.reloadData()
         searchLoadingIndicator.isHidden = false
         searchLoadingIndicator.startAnimation(NSTextField.self)
-        osSearch(selectedLan: selectedLanguage, query: searchTerm, movieHash: nil)
+        osSearch(selectedLan: selectedLanguage, query: searchTerm, movieHash: nil, movieFileSize: nil)
     }
     
     override func controlTextDidChange(_ obj: Notification) {
@@ -91,7 +95,7 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
     
     @IBAction func didSelectLanguage(_ sender: NSPopUpButton) {
         self.selectedLanguage = LanguageList.languageDict.object(forKey: languagePopUp.titleOfSelectedItem! as String)! as! String
-        osSearch(selectedLan: selectedLanguage, query: searchField.stringValue, movieHash: nil)
+        osSearch(selectedLan: selectedLanguage, query: searchField.stringValue, movieHash: videoHash, movieFileSize: videoFileSize)
     }
     
     
@@ -143,13 +147,16 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
     }
     
     
-    func osSearch(selectedLan: String!, query: String?, movieHash: String?) {
+    func osSearch(selectedLan: String!, query: String?, movieHash: String?, movieFileSize: UInt64?) {
         osLogin { () -> () in
             self.searchData = [SubtitleSearchDataModel]()
             var params = [Any]()
             
             if movieHash != nil {
-                params = [OpenSubtitleConfiguration.token!, [["sublanguageid": selectedLan!, "moviehash": movieHash!]]] as [Any]
+                print(movieHash)
+                print(movieFileSize)
+                print(OpenSubtitleConfiguration.token!)
+                params = [OpenSubtitleConfiguration.token!, [["sublanguageid": selectedLan!, "moviehash": movieHash!, "moviebytesize": movieFileSize!]]] as [Any]
             } else {
                 params = [OpenSubtitleConfiguration.token!, [["sublanguageid": selectedLan!, "query": query!]]] as [Any]
             }
@@ -266,9 +273,10 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
         searchLoadingIndicator.startAnimation(NSTextField.self)
         
         searchField.stringValue = (path?.components(separatedBy: "/").last)!
-        let videoHash = OpenSubtitlesHash.hashFor(path!).fileHash
+        videoHash = OpenSubtitlesHash.hashFor(path!).fileHash
+        videoFileSize = OpenSubtitlesHash.hashFor(path!).fileSize
         
-        osSearch(selectedLan: selectedLanguage, query: nil, movieHash: videoHash)
+        osSearch(selectedLan: selectedLanguage, query: nil, movieHash: videoHash, movieFileSize: videoFileSize)
     }
     
     func draggingDidEnter() {
