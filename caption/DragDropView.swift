@@ -10,6 +10,10 @@ import Cocoa
 
 protocol DragDropDelegate {
     func droppingDidComplete(hash: String)
+    func draggingDidEnter()
+    func draggingDidExit()
+    func draggingDidEnd()
+    
 }
 
 class DragDropView: NSView {
@@ -21,10 +25,6 @@ class DragDropView: NSView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
-        placeholderText = self.subviews[0] as? NSTextField
-        self.alphaValue = 0.5
-        
         register(forDraggedTypes: [NSFilenamesPboardType, NSURLPboardType])
     }
     
@@ -50,8 +50,7 @@ class DragDropView: NSView {
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         if checkExtension(sender) == true {
-            self.alphaValue = 1.0
-            placeholderText?.stringValue = "Drop Files"
+            delegate?.draggingDidEnter()
             return .copy
         } else {
             return NSDragOperation()
@@ -73,13 +72,11 @@ class DragDropView: NSView {
     }
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
-        self.alphaValue = 0.5
-        placeholderText?.stringValue = "Drop an episode or season"
+        delegate?.draggingDidExit()
     }
     
     override func draggingEnded(_ sender: NSDraggingInfo?) {
-        self.alphaValue = 0.5
-        placeholderText?.stringValue = "Drop an episode or season"
+        delegate?.draggingDidEnd()
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
@@ -91,22 +88,6 @@ class DragDropView: NSView {
         self.filePath = path
         let videoHash = OpenSubtitlesHash.hashFor(filePath!).fileHash
         delegate?.droppingDidComplete(hash: videoHash)
-        
-        /*let videoHash = OpenSubtitlesHash.hashFor(filePath!).fileHash
-        let captionVC = CaptionViewController()
-        
-        
-        captionVC.searchData.removeAll()
-        captionVC.subtitleTableView.reloadData()
-        captionVC.searchLoadingIndicator.isHidden = false
-        captionVC.searchLoadingIndicator.startAnimation(self)
-        //searchData.removeAll()
-        //subtitleTableView.reloadData()
-        //searchLoadingIndicator.isHidden = false
-        //searchLoadingIndicator.startAnimation(NSTextField.self)
-        
-        captionVC.osSearch(selectedLan: nil, query: nil, movieHash: videoHash)
-        //debugPrint("File hash: \(videoHash.fileHash)\nFile size: \(videoHash.fileSize)")*/
         
         return true
     }

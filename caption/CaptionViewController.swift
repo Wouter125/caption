@@ -16,6 +16,8 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
     @IBOutlet weak var searchLoadingIndicator: NSProgressIndicator!
     @IBOutlet weak var searchEraseButton: NSButton!
     @IBOutlet weak var dragdropPlaceholder: DragDropView!
+    @IBOutlet weak var dragdropCopyPlaceholder: NSTextField!
+    
     
     private var selectedLanguage:String!
     private var searchData = [SubtitleSearchDataModel]()
@@ -27,6 +29,9 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
         
         searchField.delegate = self
         dragdropPlaceholder.delegate = self
+        
+        dragdropPlaceholder.alphaValue = 0.5
+        dragdropCopyPlaceholder.alphaValue = 0.5
         
         checkMovieHash()
         
@@ -253,7 +258,6 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
     }
     
     //MARK: - DragDrop Delegate
-    
     func droppingDidComplete(hash: String) {
         searchData.removeAll()
         subtitleTableView.reloadData()
@@ -263,5 +267,24 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
         
         osSearch(selectedLan: selectedLanguage, query: nil, movieHash: hash)
     }
+    
+    func draggingDidEnter() {
+        dragdropCopyPlaceholder.stringValue = "Drop Files"
+        dragdropPlaceholder.alphaValue = 1.0
+        dragdropCopyPlaceholder.alphaValue = 1.0
+    }
+    
+    func draggingDidEnd() {
+        dragdropCopyPlaceholder.stringValue = "Drop an episode or movie"
+        dragdropPlaceholder.alphaValue = 0.5
+        dragdropCopyPlaceholder.alphaValue = 0.5
+    }
+    
+    func draggingDidExit() {
+        dragdropCopyPlaceholder.stringValue = "Drop an episode or movie"
+        dragdropPlaceholder.alphaValue = 0.5
+        dragdropCopyPlaceholder.alphaValue = 0.5
+    }
+    
 }
 

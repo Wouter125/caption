@@ -910,6 +910,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dragdropCopyPlaceholder" destination="oxO-aJ-KEh" id="Itx-Yg-Vli"/>
                         <outlet property="dragdropPlaceholder" destination="N1N-cN-cwt" id="4cy-ju-GCP"/>
                         <outlet property="languagePopUp" destination="48f-wI-exG" id="gBI-Nt-7Ml"/>
                         <outlet property="searchEraseButton" destination="hwr-0R-eWe" id="Mn1-9i-gQT"/>
