@@ -20,7 +20,7 @@
 		6C934A761E98C30900821353 /* CustomSearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C934A751E98C30900821353 /* CustomSearchField.swift */; };
 		6C96FBD31E8D354100678DB4 /* SubtitleSearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C96FBD21E8D354100678DB4 /* SubtitleSearchDataModel.swift */; };
 		6C9D215D1E86A0DD00C653B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9D215C1E86A0DD00C653B0 /* AppDelegate.swift */; };
-		6C9D215F1E86A0DD00C653B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9D215E1E86A0DD00C653B0 /* ViewController.swift */; };
+		6C9D215F1E86A0DD00C653B0 /* CaptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9D215E1E86A0DD00C653B0 /* CaptionViewController.swift */; };
 		6C9D21611E86A0DD00C653B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C9D21601E86A0DD00C653B0 /* Assets.xcassets */; };
 		6C9D21641E86A0DD00C653B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C9D21621E86A0DD00C653B0 /* Main.storyboard */; };
 		6C9D216F1E86A0DD00C653B0 /* captionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9D216E1E86A0DD00C653B0 /* captionTests.swift */; };
@@ -65,7 +65,7 @@
 		6C96FBD21E8D354100678DB4 /* SubtitleSearchDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleSearchDataModel.swift; sourceTree = "<group>"; };
 		6C9D21591E86A0DD00C653B0 /* caption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = caption.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C9D215C1E86A0DD00C653B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6C9D215E1E86A0DD00C653B0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6C9D215E1E86A0DD00C653B0 /* CaptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionViewController.swift; sourceTree = "<group>"; };
 		6C9D21601E86A0DD00C653B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C9D21631E86A0DD00C653B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6C9D21651E86A0DD00C653B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				6C9D215C1E86A0DD00C653B0 /* AppDelegate.swift */,
-				6C9D215E1E86A0DD00C653B0 /* ViewController.swift */,
+				6C9D215E1E86A0DD00C653B0 /* CaptionViewController.swift */,
 				6C9D218B1E86A12E00C653B0 /* Configuration */,
 				6C9D218E1E86A14C00C653B0 /* DataManagers */,
 				6C32947C1E99886800DF33EE /* DataHandlers */,
@@ -533,7 +533,7 @@
 				6C4F3DD01EA2693F000D0558 /* DragDropView.swift in Sources */,
 				6C96FBD31E8D354100678DB4 /* SubtitleSearchDataModel.swift in Sources */,
 				6C87E9291E98D1840069C445 /* SubtitleLanguageModel.swift in Sources */,
-				6C9D215F1E86A0DD00C653B0 /* ViewController.swift in Sources */,
+				6C9D215F1E86A0DD00C653B0 /* CaptionViewController.swift in Sources */,
 				6C934A761E98C30900821353 /* CustomSearchField.swift in Sources */,
 				6C934A741E98C2DB00821353 /* CustomWindowController.swift in Sources */,
 				6C9D218A1E86A10700C653B0 /* OpenSubtitleConfiguration.swift in Sources */,

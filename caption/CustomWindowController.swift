@@ -25,7 +25,7 @@ class CustomWindowController: NSWindowController {
     }
     
     @IBAction func didSelectSearch(_ sender: NSButton) {
-        let controller = self.contentViewController as! ViewController
+        let controller = self.contentViewController as! CaptionViewController
         controller.makeFirstResponder()
     }
 }

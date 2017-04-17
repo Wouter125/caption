@@ -8,11 +8,16 @@
 
 import Cocoa
 
+protocol DragDropDelegate {
+    func droppingDidComplete(hash: String)
+}
+
 class DragDropView: NSView {
     
     var filePath: String?
     let expectedExt = ["jpg", "avi"] //file extensions allowed for Drag&Drop
     var placeholderText: NSTextField?
+    var delegate:DragDropDelegate?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -84,8 +89,24 @@ class DragDropView: NSView {
         
         //GET YOUR FILE PATH !!
         self.filePath = path
-        let videoHash = OpenSubtitlesHash.hashFor(filePath!)
-        debugPrint("File hash: \(videoHash.fileHash)\nFile size: \(videoHash.fileSize)")
+        let videoHash = OpenSubtitlesHash.hashFor(filePath!).fileHash
+        delegate?.droppingDidComplete(hash: videoHash)
+        
+        /*let videoHash = OpenSubtitlesHash.hashFor(filePath!).fileHash
+        let captionVC = CaptionViewController()
+        
+        
+        captionVC.searchData.removeAll()
+        captionVC.subtitleTableView.reloadData()
+        captionVC.searchLoadingIndicator.isHidden = false
+        captionVC.searchLoadingIndicator.startAnimation(self)
+        //searchData.removeAll()
+        //subtitleTableView.reloadData()
+        //searchLoadingIndicator.isHidden = false
+        //searchLoadingIndicator.startAnimation(NSTextField.self)
+        
+        captionVC.osSearch(selectedLan: nil, query: nil, movieHash: videoHash)
+        //debugPrint("File hash: \(videoHash.fileHash)\nFile size: \(videoHash.fileSize)")*/
         
         return true
     }

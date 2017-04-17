@@ -9,7 +9,7 @@
 import Cocoa
 import Gzip
 
-class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate {
+class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate, DragDropDelegate {
     @IBOutlet weak var subtitleTableView: NSTableView!
     @IBOutlet weak var searchField: NSTextField!
     @IBOutlet weak var languagePopUp: NSPopUpButton!
@@ -26,13 +26,12 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         self.searchEraseButton.isHidden = true
         
         searchField.delegate = self
+        dragdropPlaceholder.delegate = self
+        
+        checkMovieHash()
         
         makeFirstResponder()
         initNSPopUpButton()
-        
-        let videoUrl = "/Users/wouter/Downloads/breakdance.avi"
-        let videoHash = OpenSubtitlesHash.hashFor(videoUrl)
-        debugPrint("File hash: \(videoHash.fileHash)\nFile size: \(videoHash.fileSize)")
         
         super.viewDidLoad()
     }
@@ -52,7 +51,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         subtitleTableView.reloadData()
         searchLoadingIndicator.isHidden = false
         searchLoadingIndicator.startAnimation(NSTextField.self)
-        osSearch(selectedLan: selectedLanguage, query: searchTerm)
+        osSearch(selectedLan: selectedLanguage, query: searchTerm, movieHash: nil)
     }
     
     override func controlTextDidChange(_ obj: Notification) {
@@ -87,7 +86,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     
     @IBAction func didSelectLanguage(_ sender: NSPopUpButton) {
         self.selectedLanguage = LanguageList.languageDict.object(forKey: languagePopUp.titleOfSelectedItem! as String)! as! String
-        osSearch(selectedLan: selectedLanguage, query: searchField.stringValue)
+        osSearch(selectedLan: selectedLanguage, query: searchField.stringValue, movieHash: nil)
     }
     
     
@@ -139,10 +138,16 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     }
     
     
-    func osSearch(selectedLan: String!, query: String?) {
+    func osSearch(selectedLan: String!, query: String?, movieHash: String?) {
         osLogin { () -> () in
             self.searchData = [SubtitleSearchDataModel]()
-            let params = [OpenSubtitleConfiguration.token!, [["sublanguageid": selectedLan!, "query": query!]]] as [Any]
+            var params = [Any]()
+            
+            if movieHash != nil {
+                params = [OpenSubtitleConfiguration.token!, [["sublanguageid": selectedLan!, "moviehash": movieHash!]]] as [Any]
+            } else {
+                params = [OpenSubtitleConfiguration.token!, [["sublanguageid": selectedLan!, "query": query!]]] as [Any]
+            }
             
             let searchManager = OpenSubtitleDataManager(
                 secureBaseURL: OpenSubtitleConfiguration.secureBaseURL!,
@@ -153,6 +158,12 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
                 let data = response[0]["data"].array
                 if data == nil {
                     print("No Results")
+                    
+                    DispatchQueue.main.async {
+                        self.searchLoadingIndicator.isHidden = true
+                        self.searchLoadingIndicator.stopAnimation(response)
+                    }
+                    
                 } else {
                     for subtitle in data! {
                         let subtitleData = SubtitleSearchDataModel(subtitle: subtitle)
@@ -169,7 +180,20 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         }
     }
     
-    func checkHash() {
+    func checkMovieHash() {
+        osLogin { () -> () in
+            let params = [OpenSubtitleConfiguration.token!, ["ca8f3c95403dd70f"]] as [Any]
+            
+            let checkMovieHashManager = OpenSubtitleDataManager(
+                secureBaseURL: OpenSubtitleConfiguration.secureBaseURL!,
+                osMethod: "CheckMovieHash",
+                parameters: params)
+            
+            checkMovieHashManager.fetchOpenSubtitleData(completion: { (response) in
+                //When checking hash we can use the following structure to receive the details.
+                //let _ = response[0]["data"]["ca8f3c95403dd70f"]["MovieName"].string
+            })
+        }
         
     }
     
@@ -228,6 +252,16 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         })
     }
     
-
+    //MARK: - DragDrop Delegate
+    
+    func droppingDidComplete(hash: String) {
+        searchData.removeAll()
+        subtitleTableView.reloadData()
+        dragdropPlaceholder.isHidden = true
+        searchLoadingIndicator.isHidden = false
+        searchLoadingIndicator.startAnimation(NSTextField.self)
+        
+        osSearch(selectedLan: selectedLanguage, query: nil, movieHash: hash)
+    }
 }
 
