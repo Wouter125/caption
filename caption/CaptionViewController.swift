@@ -258,14 +258,17 @@ class CaptionViewController: NSViewController, NSTableViewDataSource, NSTableVie
     }
     
     //MARK: - DragDrop Delegate
-    func droppingDidComplete(hash: String) {
+    func droppingDidComplete(path: String?) {
         searchData.removeAll()
         subtitleTableView.reloadData()
         dragdropPlaceholder.isHidden = true
         searchLoadingIndicator.isHidden = false
         searchLoadingIndicator.startAnimation(NSTextField.self)
         
-        osSearch(selectedLan: selectedLanguage, query: nil, movieHash: hash)
+        searchField.stringValue = (path?.components(separatedBy: "/").last)!
+        let videoHash = OpenSubtitlesHash.hashFor(path!).fileHash
+        
+        osSearch(selectedLan: selectedLanguage, query: nil, movieHash: videoHash)
     }
     
     func draggingDidEnter() {

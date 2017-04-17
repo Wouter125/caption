@@ -9,17 +9,16 @@
 import Cocoa
 
 protocol DragDropDelegate {
-    func droppingDidComplete(hash: String)
+    func droppingDidComplete(path: String?)
     func draggingDidEnter()
     func draggingDidExit()
     func draggingDidEnd()
-    
 }
 
 class DragDropView: NSView {
     
     var filePath: String?
-    let expectedExt = ["jpg", "avi"] //file extensions allowed for Drag&Drop
+    let expectedExt = ["webm", "mkv", "flv", "vob", "ogv", "ogg", "drc", "avi", "mov", "qt", "wmv", "yuv", "asf", "amv", "mp4", "m4p", "m4v", "mpg", "mp2", "mpeg", "mpe", "mpv", "m2v", "m4v", "3gp", "f4v"] //file extensions allowed for Drag&Drop
     var placeholderText: NSTextField?
     var delegate:DragDropDelegate?
     
@@ -31,19 +30,16 @@ class DragDropView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
-        // dash customization parameters
         let lineWidth: CGFloat = 1
         let dashHeight: CGFloat = 3
-        let dashLength: CGFloat = 5
+        let dashLength: CGFloat = 3
         let dashColor: NSColor = .white
         
-        // setup the context
         let currentContext = NSGraphicsContext.current()!.cgContext
         currentContext.setLineWidth(lineWidth)
         currentContext.setLineDash(phase: 0, lengths: [dashLength])
         currentContext.setStrokeColor(dashColor.cgColor)
         
-        // draw the dashed path
         currentContext.addRect(bounds.insetBy(dx: dashHeight, dy: dashHeight))
         currentContext.strokePath()
     }
@@ -86,8 +82,7 @@ class DragDropView: NSView {
         
         //GET YOUR FILE PATH !!
         self.filePath = path
-        let videoHash = OpenSubtitlesHash.hashFor(filePath!).fileHash
-        delegate?.droppingDidComplete(hash: videoHash)
+        delegate?.droppingDidComplete(path: filePath)
         
         return true
     }
